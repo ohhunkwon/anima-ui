@@ -47,8 +47,25 @@ BoxLayout:
             icon: "view-headline"
 
             MDLabel:
-                text: "read text..."
-                halign: "center"
+                Accordion:
+                    orientation: "vertical"
+                    size: root.width, root.height*0.8
+
+                    AccordionItem:
+                        title: "Panel 1"
+                        Label:
+                            text: "Panel 1 text"
+                            font_size: 28
+                    AccordionItem:
+                        title: "Panel 2"
+                        Label:
+                            text: "Panel 2 text"
+                            font_size: 28
+                    AccordionItem:
+                        title: "Panel 3"
+                        Label:
+                            text: "Panel 3 text"
+                            font_size: 28
 
         MDBottomNavigationItem:
             name: "setting"
