@@ -8,6 +8,10 @@ class MainApp(MDApp):
         self.theme_cls.primary_palette = "BlueGray"
         return Builder.load_file("styles.kv")
 
+    def process(self):
+        text = self.root.ids.input.text
+        print(text)
+
 
 if __name__ == '__main__':
     MainApp().run()
