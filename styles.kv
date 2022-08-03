@@ -1,5 +1,6 @@
 BoxLayout:
     orientation: "vertical"
+    __safe_id: [gender.__self__, language.__self__]
 
     MDToolbar:
         title: "ANIMA"
@@ -14,18 +15,45 @@ BoxLayout:
             icon: "headset"
 
             MDLabel:
+                text: "Voices recorded: 8"
+                text_size: self.size
+                valign: "top"
+                halign: "center"
+                padding: (100, 50)
+            MDLabel:
                 text: "Say the sentence below"
                 text_size: self.size
                 valign: "top"
                 halign: "center"
-                padding: (300, 100)
+                padding: (100, 125)
             MDLabel:
                 text: f'{"Its easy to tell the depth of a well."}'
                 text_size: self.size
                 valign: "top"
                 halign: "center"
-                padding: (300, 300)
-                font_size: 60
+                padding: (100, 200)
+                font_size: 30
+            MDLabel:
+                text: "Upload .wav"
+                text_size: self.size
+                valign: "bottom"
+                halign: "left"
+                padding: (50, 70)
+                font_size: 15
+            BoxLayout:
+                orientation: 'vertical'
+                size: root.width*0.3, root.height*0.3
+                size_hint: (None, None)
+                pos: (50, 100)
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: sp(52)
+
+                FileChooser:
+                    id: fc
+                    FileChooserListLayout
+
             ToggleButton:
                 text: "Start Recording"
                 font_size: "20sp"
@@ -34,12 +62,22 @@ BoxLayout:
                 background_down: 'down.png'
                 border: 30,30,30,30
                 color: (1, 1, 1, 1)
-                size: (32, 32)
                 size_hint: (.2, .2)
-                pos: (630, 250)
+                pos: (300, 100)
                 on_state:
                     self.text = "Start Recording" if self.state == "normal" else "Recording..."
                     self.color = (1, 1, 1, 1) if self.state == "normal" else (0, 0, 0, 1)
+            Button:
+                text: 'Next Sentence'
+                on_press: print("Next sentence button pressed")
+                font_size: "20sp"
+                background_color: (1, 1, 1, 1)
+                background_normal: 'normal.png'
+                background_down: 'down.png'
+                border: 30,30,30,30
+                color: (1, 1, 1, 1)
+                size_hint: (.2, .2)
+                pos: (500, 100)
 
         MDBottomNavigationItem:
             name: "read text"
@@ -71,7 +109,65 @@ BoxLayout:
             name: "setting"
             text: "settings"
             icon: "dns"
+            orientation: "vertical"
 
-            MDLabel:
-                text: "settings page..."
-                halign: "center"
+            BoxLayout:
+                size_hint: 0.4, 0.4
+                pos_hint: {'center_x': 0.45, 'top': 0.9}
+                Switch:
+                    id: default_voice
+                Label:
+                    text: 'Default voice ON' if default_voice.active else 'Default voice OFF'
+
+            BoxLayout:
+                size_hint: 1, 1
+                pos_hint: {'center_x': 0.8, 'center_y': 0.8}
+                Button:
+                    font_size: 12
+                    size_hint: None, None
+                    id: btn_gender
+                    text: "Select Gender"
+                    size_hint: None, None
+                    on_parent: gender.dismiss()
+                    on_release: gender.open(self)
+                DropDown:
+                    id: gender
+                    on_select: btn_gender.text = f'{args[1]}'
+                    Button:
+                        id: btn-gender1
+                        text: 'Male'
+                        size_hint: None, None
+                        height: 35
+                        on_release: gender.select('Male')
+                    Button:
+                        id: btn-gender2
+                        text: 'Female'
+                        size_hint: None, None
+                        height: 35
+                        on_release: gender.select('Female')
+            BoxLayout:
+                size_hint: 1, 1
+                pos_hint: {'center_x': 1.0, 'center_y': 0.8}
+                Button:
+                    font_size: 12
+                    size_hint: None, None
+                    id: btn_language
+                    text: "Select Language"
+                    size_hint: None, None
+                    on_parent: language.dismiss()
+                    on_release: language.open(self)
+                DropDown:
+                    id: language
+                    on_select: btn_language.text = f'{args[1]}'
+                    Button:
+                        id: btn-language1
+                        text: 'English'
+                        size_hint: None, None
+                        height: 35
+                        on_release: language.select('English')
+                    Button:
+                        id: btn-language2
+                        text: 'Portuguese'
+                        size_hint: None, None
+                        height: 35
+                        on_release: language.select('Portuguese')
