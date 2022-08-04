@@ -5,9 +5,12 @@ BoxLayout:
     MDToolbar:
         title: "ANIMA"
         md_bg_color: app.theme_cls.primary_light
-        specific_text_color: 0, 0, 0, 1
+        specific_text_color: 0.2, 0.2, 0.2, 1
 
     MDBottomNavigation:
+        panel_color: app.theme_cls.primary_light
+        text_color_normal: 0.3, 0.3, 0.3, 1
+        text_color_active: 0, 0, 0, 1
 
         MDBottomNavigationItem:
             name: "clone voice"
@@ -52,7 +55,7 @@ BoxLayout:
                                     pos_hint:  {'center_x' : 0.6}
 
                     AccordionItem:
-                        title: "Upload .wav to clone voice"
+                        title: "Upload .wav"
                         padding: 20
                         spacing: 20
 
@@ -68,6 +71,9 @@ BoxLayout:
                             FileChooser:
                                 id: fc_wav
                                 FileChooserListLayout
+                        Button:
+                            id: upload_wav
+                            text: 'Click Me to Upload'
 
         MDBottomNavigationItem:
             name: "read text"
@@ -89,16 +95,14 @@ BoxLayout:
                             TextInput:
                                 id: input
                                 hint_text: 'Enter text'
-                                pos_hint: { 'top' : 0.65}
                             Button:
                                 id: read_input
-                                text: 'Read Out'
-                                height: 35
+                                text: 'Click Me to Read Out'
                                 on_press: app.process()
-                                pos_hint: { 'top' : 0.65}
 
                     AccordionItem:
-                        title: "Upload .pdf to read out"
+                        title: "Read .pdf"
+
                         BoxLayout:
                             orientation: 'vertical'
 
@@ -112,8 +116,11 @@ BoxLayout:
                                 size: root.width*0.8, root.height*0.8
                                 size_hint: 1, 1
                                 FileChooser:
-                                    id: fc_pdf
+                                    id: fc_pdf_upload
                                     FileChooserListLayout
+                        Button:
+                            id: read_pdf
+                            text: 'Click Me to Read Out'
 
         MDBottomNavigationItem:
             name: "setting"
