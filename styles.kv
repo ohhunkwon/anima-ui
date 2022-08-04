@@ -4,8 +4,8 @@ BoxLayout:
 
     MDToolbar:
         title: "ANIMA"
-        md_bg_color: .2, .2, .2, 1
-        specific_text_color: 1, 1, 1, 1
+        md_bg_color: app.theme_cls.primary_light
+        specific_text_color: 0, 0, 0, 1
 
     MDBottomNavigation:
 
@@ -42,10 +42,6 @@ BoxLayout:
                                 spacing: 100
                                 ToggleButton:
                                     text: "Start Recording"
-                                    background_color: (1, 1, 1, 1)
-                                    background_normal: 'normal.png'
-                                    background_down: 'down.png'
-                                    color: (1, 1, 1, 1)
                                     pos_hint:  {'center_x' : 0.6}
                                     on_state:
                                         self.text = "Start Recording" if self.state == "normal" else "Recording..."
@@ -53,15 +49,19 @@ BoxLayout:
                                 Button:
                                     text: 'Next Sentence'
                                     on_press: print("Next sentence button pressed")
-                                    background_color: (1, 1, 1, 1)
-                                    background_normal: 'normal.png'
-                                    background_down: 'down.png'
-                                    color: (1, 1, 1, 1)
                                     pos_hint:  {'center_x' : 0.6}
 
                     AccordionItem:
                         title: "Upload .wav to clone voice"
+                        padding: 20
+                        spacing: 20
+
                         BoxLayout:
+                            canvas.before:
+                                Color:
+                                    rgba: 0,0,0,1
+                                Rectangle:
+                                    size: self.size
                             orientation: 'vertical'
                             size: root.width*0.8, root.height*0.8
                             size_hint: 1, 1
@@ -101,10 +101,13 @@ BoxLayout:
                         title: "Upload .pdf to read out"
                         BoxLayout:
                             orientation: 'vertical'
-                            padding: 20
-                            spacing: 20
 
                             BoxLayout:
+                                canvas.before:
+                                    Color:
+                                        rgba: 0,0,0,1
+                                    Rectangle:
+                                        size: self.size
                                 orientation: 'vertical'
                                 size: root.width*0.8, root.height*0.8
                                 size_hint: 1, 1
@@ -125,6 +128,7 @@ BoxLayout:
                     id: default_voice
                 Label:
                     text: 'Default voice ON' if default_voice.active else 'Default voice OFF'
+                    color: 'black'
 
             BoxLayout:
                 size_hint: 1, 1
