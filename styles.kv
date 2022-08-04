@@ -1,6 +1,6 @@
 BoxLayout:
     orientation: "vertical"
-    __safe_id: [gender.__self__, language.__self__]
+    __safe_id: [gender.__self__, language.__self__, user.__self__]
 
     MDToolbar:
         title: "ANIMA"
@@ -14,70 +14,60 @@ BoxLayout:
             text: "record voice"
             icon: "headset"
 
-            MDLabel:
-                text: "Voices recorded: 8"
-                text_size: self.size
-                valign: "top"
-                halign: "center"
-                padding: (100, 50)
-            MDLabel:
-                text: "Say the sentence below"
-                text_size: self.size
-                valign: "top"
-                halign: "center"
-                padding: (100, 125)
-            MDLabel:
-                text: f'{"Its easy to tell the depth of a well."}'
-                text_size: self.size
-                valign: "top"
-                halign: "center"
-                padding: (100, 200)
-                font_size: 30
-            MDLabel:
-                text: "Upload .wav"
-                text_size: self.size
-                valign: "bottom"
-                halign: "left"
-                padding: (50, 70)
-                font_size: 15
-            BoxLayout:
-                orientation: 'vertical'
-                size: root.width*0.3, root.height*0.3
-                size_hint: (None, None)
-                pos: (50, 100)
 
-                BoxLayout:
-                    size_hint_y: None
-                    height: sp(52)
+            MDLabel:
+                Accordion:
+                    orientation: "vertical"
+                    size: root.width, root.height*0.8
 
-                FileChooser:
-                    id: fc
-                    FileChooserListLayout
+                    AccordionItem:
+                        title: "Clone voice by speaking"
+                        BoxLayout:
+                            orientation: 'vertical'
+                            padding: 20
+                            spacing: 20
 
-            ToggleButton:
-                text: "Start Recording"
-                font_size: "20sp"
-                background_color: (1, 1, 1, 1)
-                background_normal: 'normal.png'
-                background_down: 'down.png'
-                border: 30,30,30,30
-                color: (1, 1, 1, 1)
-                size_hint: (.2, .2)
-                pos: (300, 100)
-                on_state:
-                    self.text = "Start Recording" if self.state == "normal" else "Recording..."
-                    self.color = (1, 1, 1, 1) if self.state == "normal" else (0, 0, 0, 1)
-            Button:
-                text: 'Next Sentence'
-                on_press: print("Next sentence button pressed")
-                font_size: "20sp"
-                background_color: (1, 1, 1, 1)
-                background_normal: 'normal.png'
-                background_down: 'down.png'
-                border: 30,30,30,30
-                color: (1, 1, 1, 1)
-                size_hint: (.2, .2)
-                pos: (500, 100)
+                            MDLabel:
+                                text: "Say the sentence below:"
+                                size_hint: (0.8, 0.2)
+                                pos_hint:  {'center_x' : 0.6}
+                            MDLabel:
+                                text: f'{"Its easy to tell the depth of a well."}'
+                                font_size: 30
+                                size_hint: (0.8, 0.2)
+                                pos_hint:  {'center_x' : 0.6}
+                            BoxLayout:
+                                orientation: "horizontal"
+                                padding: 50
+                                spacing: 100
+                                ToggleButton:
+                                    text: "Start Recording"
+                                    background_color: (1, 1, 1, 1)
+                                    background_normal: 'normal.png'
+                                    background_down: 'down.png'
+                                    color: (1, 1, 1, 1)
+                                    pos_hint:  {'center_x' : 0.6}
+                                    on_state:
+                                        self.text = "Start Recording" if self.state == "normal" else "Recording..."
+                                        self.color = (1, 1, 1, 1) if self.state == "normal" else (0, 0, 0, 1)
+                                Button:
+                                    text: 'Next Sentence'
+                                    on_press: print("Next sentence button pressed")
+                                    background_color: (1, 1, 1, 1)
+                                    background_normal: 'normal.png'
+                                    background_down: 'down.png'
+                                    color: (1, 1, 1, 1)
+                                    pos_hint:  {'center_x' : 0.6}
+
+                    AccordionItem:
+                        title: "Upload .wav to clone voice"
+                        BoxLayout:
+                            orientation: 'vertical'
+                            size: root.width*0.8, root.height*0.8
+                            size_hint: 1, 1
+                            FileChooser:
+                                id: fc_wav
+                                FileChooserListLayout
 
         MDBottomNavigationItem:
             name: "read text"
@@ -91,28 +81,36 @@ BoxLayout:
 
                     AccordionItem:
                         title: "Read out custom text"
-                        TextInput:
-                            id: input
-                            hint_text: 'Enter text'
-                            size_hint: 0.5, 0.3
-                            pos_hint: { 'top' : 0.65}
-                        Button:
-                            id: read_input
-                            text: 'Read Out'
-                            height: 35
-                            on_press: app.process()
-                            size_hint: 0.5, 0.3
-                            pos_hint: { 'top' : 0.65}
+                        BoxLayout:
+                            orientation: 'vertical'
+                            padding: 20
+                            spacing: 20
+
+                            TextInput:
+                                id: input
+                                hint_text: 'Enter text'
+                                pos_hint: { 'top' : 0.65}
+                            Button:
+                                id: read_input
+                                text: 'Read Out'
+                                height: 35
+                                on_press: app.process()
+                                pos_hint: { 'top' : 0.65}
 
                     AccordionItem:
                         title: "Upload .pdf to read out"
                         BoxLayout:
                             orientation: 'vertical'
-                            size: root.width*0.8, root.height*0.8
-                            size_hint: 1, 1
-                            FileChooser:
-                                id: fc_pdf
-                                FileChooserListLayout
+                            padding: 20
+                            spacing: 20
+
+                            BoxLayout:
+                                orientation: 'vertical'
+                                size: root.width*0.8, root.height*0.8
+                                size_hint: 1, 1
+                                FileChooser:
+                                    id: fc_pdf
+                                    FileChooserListLayout
 
         MDBottomNavigationItem:
             name: "setting"
@@ -121,8 +119,8 @@ BoxLayout:
             orientation: "vertical"
 
             BoxLayout:
-                size_hint: 0.4, 0.4
-                pos_hint: {'center_x': 0.45, 'top': 0.9}
+                size_hint: 0.5, 0.5
+                pos_hint: {'center_x': 0.45, 'top': 1}
                 Switch:
                     id: default_voice
                 Label:
@@ -130,7 +128,7 @@ BoxLayout:
 
             BoxLayout:
                 size_hint: 1, 1
-                pos_hint: {'center_x': 0.8, 'center_y': 0.8}
+                pos_hint: {'center_x': 0.7, 'center_y': 0.8}
                 Button:
                     font_size: 12
                     size_hint: None, None
@@ -156,7 +154,7 @@ BoxLayout:
                         on_release: gender.select('Female')
             BoxLayout:
                 size_hint: 1, 1
-                pos_hint: {'center_x': 1.0, 'center_y': 0.8}
+                pos_hint: {'center_x': 0.9, 'center_y': 0.8}
                 Button:
                     font_size: 12
                     size_hint: None, None
@@ -180,3 +178,29 @@ BoxLayout:
                         size_hint: None, None
                         height: 35
                         on_release: language.select('Portuguese')
+            BoxLayout:
+                size_hint: 1, 1
+                pos_hint: {'center_x': 1.1, 'center_y': 0.8}
+                Button:
+                    font_size: 12
+                    size_hint: None, None
+                    id: btn_user
+                    text: "Select User"
+                    size_hint: None, None
+                    on_parent: user.dismiss()
+                    on_release: user.open(self)
+                DropDown:
+                    id: user
+                    on_select: btn_user.text = f'{args[1]}'
+                    Button:
+                        id: btn-user1
+                        text: 'User1'
+                        size_hint: None, None
+                        height: 35
+                        on_release: user.select('User1')
+                    Button:
+                        id: btn-user2
+                        text: 'User2'
+                        size_hint: None, None
+                        height: 35
+                        on_release: user.select('User2')
